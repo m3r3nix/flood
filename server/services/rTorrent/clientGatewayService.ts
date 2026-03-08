@@ -699,6 +699,7 @@ class RTorrentClientGatewayService extends ClientGatewayService {
                 downTotal: response.downTotal,
                 eta: getTorrentETAFromProperties(response),
                 hash: response.hash,
+                isActive: response.isActive,
                 isPrivate: response.isPrivate,
                 isInitialSeeding: response.isInitialSeeding,
                 isSequential: response.isSequential,
