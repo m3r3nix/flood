@@ -44,8 +44,9 @@ export const getTorrentPercentCompleteFromProperties = (
 export const getTorrentStatusFromProperties = (
   processingTorrentProperties: Record<string, unknown>,
 ): TorrentProperties['status'] => {
-  const {isActive, isHashing, isComplete, isOpen, upRate, downRate, state, message} = processingTorrentProperties;
-
+  const {isActive, isHashing, isComplete, isOpen, upRate, downRate, state, message, hasUsableTracker} =
+    processingTorrentProperties;
+  const hasLocalError = typeof message === 'string' && message.length && !isOpen && !isActive;
   const torrentStatus: Array<TorrentStatus> = [];
 
   if (isHashing) {
@@ -66,7 +67,7 @@ export const getTorrentStatusFromProperties = (
     torrentStatus.push('stopped');
   }
 
-  if (typeof message === 'string' && message.length && !isActive) {
+  if (hasLocalError || !hasUsableTracker) {
     torrentStatus.push('error');
   }
 

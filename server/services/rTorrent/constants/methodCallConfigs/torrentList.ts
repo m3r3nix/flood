@@ -146,6 +146,18 @@ const torrentListMethodCallConfigs = {
       );
     },
   },
+  hasUsableTracker: {
+    methodCall: 'cat="$t.multicall=d.hash=,t.is_enabled=,t.is_usable=,cat={|||}"',
+    transformValue: (value: unknown): boolean => {
+      if (typeof value !== 'string' || value === '') {
+        return false;
+      }
+
+      return value.split('|||').some((tracker) => {
+        return tracker === '11';
+      });
+    },
+  },
   seedsConnected: {
     methodCall: 'd.peers_complete=',
     transformValue: numberTransformer,
